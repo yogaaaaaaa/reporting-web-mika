@@ -1,9 +1,20 @@
 const express = require("express");
 const app = express();
-const PORT = 5000;
+const cors = require("cors")
+var corsOptions = {
+    origin : "http://localhost:5000"
+}
 
-app.listen(PORT, ()=> console.log(`server run on port ${PORT}`));
+//parse request of content-type - application/json
+app.use(cors(corsOptions))
 
-app.get('/',  (req, res)=>{
-    res.json("helo");
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({extended:true}))
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => console.log(`server run on port ${PORT}`));
+
+app.get("/", (req, res) => {
+  res.send("helo");
 })
