@@ -6,11 +6,23 @@ var corsOptions = {
   origin: "http://localhost:5000",
 };
 const db = require("./models");
+const { sequelize } = require("./models");
 const Role = db.role;
+
+
+// db.sequelize.authenticate().then(()=>{
+//   console.log('connection has been estabilished successfully');
+// }).catch(err =>{
+//   console.log('unabel to connect db', err)
+// });
+
+//resync database
 db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and Resync Db");
   initial();
 });
+
+// db.sequelize.sync();
 
 function initial() {
   Role.create({
