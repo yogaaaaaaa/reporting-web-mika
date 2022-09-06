@@ -6,29 +6,29 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
   //username
   User.findOne({
     where: {
-      username: req.body.username,
-    }.then((user) => {
-      if (user) {
-        req.status(400).send({
-          message: "failed! username is already in use!",
-        });
-        return;
-      }
-      //email
-      User.findOne({
-        where: {
-          email: req.body.email,
-        },
-      }).then((user) => {
-        if (user) {
-          res.status(400).send({
-            message: "failed! email is already in use!",
-          });
-          return;
-        }
-        next();
+      username: req.body.username
+    }
+  }).then(user => {
+    if (user) {
+      res.status(400).send({
+        message: "Failed! Username is already in use!"
       });
-    }),
+      return;
+    }next();
+    // Email
+    // User.findOne({
+    //   where: {
+    //     email: req.body.email
+    //   }
+    // }).then(user => {
+    //   if (user) {
+    //     res.status(400).send({
+    //       message: "Failed! Email is already in use!"
+    //     });
+    //     return;
+    //   }
+    //   next();
+    // });
   });
 };
 checkRolesExisted = (req, res, next) => {
@@ -36,18 +36,17 @@ checkRolesExisted = (req, res, next) => {
     for (let i = 0; i < req.body.roles.length; i++) {
       if (!ROLES.includes(req.body.roles[i])) {
         res.status(400).send({
-          message: "failed! role doesnt exist: " + req.body.roles[i],
+          message: "Failed! Role does not exist = " + req.body.roles[i]
         });
         return;
       }
     }
   }
+  
   next();
 };
-
-const verifySignup = {
-    checkDuplicateUsernameOrEmail,
-    checkRolesExisted
+const verifySignUp = {
+  checkDuplicateUsernameOrEmail,
+  checkRolesExisted
 };
-
-module.exports = verifySignup;
+module.exports = verifySignUp;

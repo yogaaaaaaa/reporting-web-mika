@@ -1,6 +1,6 @@
-
 const express = require("express");
 const app = express();
+const bodyParser = require('body-parser')
 const cors = require("cors");
 var corsOptions = {
   origin: "http://localhost:5000",
@@ -9,7 +9,6 @@ const db = require("./models");
 const { sequelize } = require("./models");
 const Role = db.role;
 
-
 // db.sequelize.authenticate().then(()=>{
 //   console.log('connection has been estabilished successfully');
 // }).catch(err =>{
@@ -17,10 +16,13 @@ const Role = db.role;
 // });
 
 //resync database
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and Resync Db");
-  initial();
-});
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and Resync Db");
+//   initial();
+// });
+
+// // 
+db.sequelize.sync();
 
 // db.sequelize.sync();
 
@@ -41,11 +43,22 @@ function initial() {
   });
 }
 
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+
+//routes
+require("./routes/auth.routes")(app);
+require("./routes/user.routes")(app);
+
 //parse request of content-type - application/json
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+
+// app.use(function(req, res, next) {
+//   res.setHeader("Content-Type", "application/json");
+//   next();
+// });
 
 const PORT = process.env.PORT || 5000;
 

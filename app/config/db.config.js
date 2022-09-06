@@ -5,7 +5,7 @@ module.exports = {
   PASSWORD: process.env.PASSWORD_DB,
   DB: process.env.DB,
 
-  dialect: "postgres",
+  dialect: "mariadb",
   pool: {
     max: 5,
     min: 0,
