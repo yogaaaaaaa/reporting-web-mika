@@ -84,11 +84,13 @@ exports.signin = (req, res) => {
     });
 };
 
+//get all users
 exports.getAllUsers = (req, res) => {
-  User.findAll().then(user=>{
+  User.findAll().then(user => {
     return res.json(user);
   })
 }
+
 
 exports.delUser = (req, res) => {
   User.destroy({

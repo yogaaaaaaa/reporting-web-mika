@@ -19,5 +19,5 @@ module.exports = function (app) {
   app.post("/api/auth/signin", controller.signin);
 
   app.delete("/api/delete/:id", [authJwt.verifyToken, authJwt.isAdmin], controller.delUser);
-  app.get("/api/users",[authJwt.verifyToken, authJwt.isAdmin], controller.getAllUsers)
+  app.get("/api/users",[authJwt.verifyToken, authJwt.isAdmin], controller.getAllUsers);
 };
